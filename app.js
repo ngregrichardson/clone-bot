@@ -5,7 +5,7 @@ const client = new Discord.Client();
 let CronJob = require('cron').CronJob;
 
 const changeToRandomUser = () => {
-    client.guilds.fetch('623603821796392991', true, true).then(res => {
+    client.guilds.fetch('623603821796392991', true, true).then(async (res) => {
         let user = res.members.cache.random();
         while(user.user.bot || !user.user.avatarURL()) {
             user = res.members.cache.random();
@@ -21,6 +21,13 @@ const changeToRandomUser = () => {
         }
         client.user.setAvatar(user.user.avatarURL());
         res.me.setNickname(user.displayName);
+        client.user.setUsername(user.user.username);
+        try {
+            await res.me.roles.remove(res.me.roles.cache.filter(r => r.id !== '829194756327342081').map(r => r.id));
+            res.me.roles.add(user.roles.cache.map(r => r.id));
+        }catch(e) {
+            console.error(e);
+        }
 
         fs.writeFileSync('./currentUser.txt', user.id);
     })
