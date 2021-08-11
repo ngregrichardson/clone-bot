@@ -35,7 +35,7 @@ const changeToRandomUser = () => {
 
 client.once('ready', () => {
     console.log("Bot online.");
-    let job = new CronJob('0 0 */3 * * *', changeToRandomUser, null, false, 'America/New_York');
+    let job = new CronJob('0 0 0 * * *', changeToRandomUser, null, false, 'America/New_York');
     job.start();
 });
 
