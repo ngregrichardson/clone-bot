@@ -9,7 +9,7 @@ A Discord bot that shadows a user in your Discord every day.
 
 ✅ Duplicates the user's activity
 
-✅ Shadows their messages and reactions
+✅ Shadows the user's messages and reactions
 
 ## 📋 Usage
 
