@@ -15,10 +15,8 @@ jobs:
         with:
           clean: false
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'yarn'
+      - name: Print path
+        run: echo $PATH
 
       - name: Install dependencies
         run: yarn install
