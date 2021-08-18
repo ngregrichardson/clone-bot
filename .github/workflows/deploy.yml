@@ -15,6 +15,9 @@ jobs:
         with:
           clean: false
 
+      - name: Update path
+        run: PATH='$PATH:/home/noah/.nvm/versions/node/v16.7.0/bin'
+
       - name: Print path
         run: echo $PATH
 
