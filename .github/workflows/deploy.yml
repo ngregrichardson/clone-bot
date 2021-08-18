@@ -18,6 +18,7 @@ jobs:
       - name: Check versions
         shell: bash -l {0}
         run: |
+          source $HOME/.bashrc
           node --version
           npm --version
 
