@@ -1,4 +1,8 @@
+.dockerignore
 node_modules
-.idea
-*.log
+npm-debug.log
+Dockerfile
+.git
+.gitignore
 dist
+.idea

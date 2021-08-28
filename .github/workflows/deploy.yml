@@ -15,16 +15,13 @@ jobs:
         with:
           clean: false
 
-      - name: Inject environment variables
-        run: |
-          touch .env
-          echo BOT_TOKEN=${{ secrets.BOT_TOKEN }} > .env
-
       - name: Build Docker
         uses: docker/build-push-action@v2.7.0
         with:
           tags: clone-bot
           push: false
+          build-args: |
+            bot_token=${{ secrets.BOT_TOKEN }}
 
       - name: Run Docker
         run: docker run clone-bot
