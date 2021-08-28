@@ -24,4 +24,4 @@ jobs:
             bot_token=${{ secrets.BOT_TOKEN }}
 
       - name: Run Docker
-        run: docker run clone-bot
+        run: docker run -d clone-bot
