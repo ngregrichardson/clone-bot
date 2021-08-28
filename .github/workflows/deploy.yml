@@ -15,20 +15,12 @@ jobs:
         with:
           clean: false
 
-      - name: Check versions
-        shell: bash -l {0}
-        run: |
-          source $HOME/.bashrc
-          node --version
-          npm --version
-
-      - name: Install dependencies
-        run: yarn install
-
       - name: Inject environment variables
         run: |
           touch .env
           echo BOT_TOKEN=${{ secrets.BOT_TOKEN }} > .env
 
-      - name: Restart PM2
-        run: pm2 restart clone-bot
+      - name: Build Docker
+        uses: docker/build-push-action@v2.7.0
+        with:
+          push: false
