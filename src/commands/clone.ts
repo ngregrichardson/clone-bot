@@ -5,6 +5,10 @@ import {cloneUser} from "../utils/utils";
 const execute = async (interaction: CommandInteraction) => {
     if(!interaction.guild) return;
 
+    if(interaction.guild.ownerId !== interaction.user.id) {
+        await interaction.reply("You do not have access to use this command.");
+    }
+
     let user = interaction.options.getUser("user");
 
     if(!user) {
