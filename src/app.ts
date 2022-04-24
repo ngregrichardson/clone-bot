@@ -44,6 +44,14 @@ const changeToRandomUser = () => {
 client.once("ready", async () => {
   console.log("Bot online.");
 
+  if (process.env.IS_PROD) {
+    client.guilds.fetch().then((guilds) => {
+      guilds.forEach((guild) => {
+        guild.fetch().then((g) => g.commands.set([]));
+      });
+    });
+  }
+
   registerCommands(client);
 
   registerEvents(client);
