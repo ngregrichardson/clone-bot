@@ -1,6 +1,5 @@
-FROM node:16-alpine
-COPY . /app
+FROM node:16
 WORKDIR /app
-ARG bot_token
-ENV BOT_TOKEN=$bot_token
-CMD yarn install && yarn start
+COPY . .
+RUN yarn install
+CMD yarn start

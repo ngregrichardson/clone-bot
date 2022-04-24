@@ -11,17 +11,33 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          clean: false
+      - uses: actions/checkout@v3
 
-      - name: Build Docker
-        uses: docker/build-push-action@v2.7.0
-        with:
-          tags: clone-bot
-          push: false
-          build-args: |
-            bot_token=${{ secrets.BOT_TOKEN }}
-
-      - name: Run Docker
-        run: docker run -d clone-bot
+      - name: Inject Environment
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          GUILD_ID: ${{ secrets.GUILD_ID }}
+          BOT_ROLE_ID: ${{ secrets.BOT_ROLE_ID }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
+          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
+        run: |
+          touch .env
+          echo BOT_TOKEN=$BOT_TOKEN > .env
+          echo CLIENT_ID=$CLIENT_ID >> .env
+          echo GUILD_ID=$GUILD_ID >> .env
+          echo BOT_ROLE_ID=$BOT_ROLE_ID >> .env
+          echo FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID >> .env
+          echo FIREBASE_PRIVATE_KEY=$FIREBASE_PRIVATE_KEY >> .env
+          echo FIREBASE_CLIENT_EMAIL=$FIREBASE_CLIENT_EMAIL >> .env
+          echo IS_PROD=true >> .env
+      - name: Stop Docker
+        run: |
+          docker stop clone-bot
+          docker rm clone-bot
+        continue-on-error: true
+      - name: Build Docker Image
+        run: docker build -t clone-bot .
+      - name: Start Docker
+        run: docker run -d --name clone-bot --env-file .env clone-bot

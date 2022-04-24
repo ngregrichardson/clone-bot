@@ -2,23 +2,32 @@
   "name": "clone-bot",
   "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
-    "lint": "tslint ./src/**"
+    "compile": "rimraf dist && tsc",
+    "start": "yarn compile && node dist/app.js",
+    "dev": "yarn compile && tsc-watch --onSuccess \"node dist/app.js\"",
+    "lint": "tslint ./src/**",
+    "deployCommands": "yarn compile && node dist/utils/deploycommands.js",
+    "testCommands": "cross-env IS_DEBUG=true yarn deployCommands",
+    "docker-build": "docker build . --tag clone-bot"
   },
   "author": "Noah Richardson",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/rest": "^0.4.1",
     "cron": "^1.8.2",
-    "discord.js": "^13.1.0",
-    "dotenv": "^10.0.0",
-    "nodemon": "^2.0.12",
-    "simple-json-db": "^1.2.3"
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "firebase-admin": "^10.1.0",
+    "simple-json-db": "^2.0.0"
   },
   "devDependencies": {
     "@types/cron": "^1.7.3",
-    "prettier": "^2.3.2",
+    "cross-env": "^7.0.3",
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
+    "tsc-watch": "^5.0.3",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.3.5"

@@ -1,4 +1,4 @@
-# 🕵️ clone-bot
+# 🕵️ Clone Bot
 A Discord bot that shadows a user in your Discord every day.
 
 ## 🤔 About

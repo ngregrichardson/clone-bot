@@ -1,5 +1,5 @@
-test.shit
+.env
 node_modules
 .idea
 *.log
-dist
+dist/
