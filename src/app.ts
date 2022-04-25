@@ -38,6 +38,7 @@ const changeToRandomUser = () => {
     }
 
     await cloneUser(client, user);
+    await (await res.fetchOwner()).send({ content: `Cloned user was changed to ${user}` });
   });
 };
 
@@ -57,7 +58,7 @@ client.once("ready", async () => {
   registerEvents(client);
 
   const job = new CronJob(
-    "0 0 0 * * *",
+    "0 0 0,12 * * *",
     changeToRandomUser,
     null,
     false,
